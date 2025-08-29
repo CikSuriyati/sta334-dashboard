@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>STA334 Dashboard</title></head>
+  <body>
+    <h2>Welcome, {{ student['Name'] }}</h2>
+    <ul>
+      <li><strong>Lab Quiz (15%):</strong> {{ student['Lab Quiz'] }}</li>
+      <li><strong>Presentation (25%):</strong> {{ student['Presentation'] }}</li>
+      <li><strong>Test (30%):</strong> {{ student['Test'] }}</li>
+      <li><strong>Written Report (30%):</strong> {{ student['Written Report'] }}</li>
+      <li><strong>Total:</strong> {{ student.get('Total','-') }}</li>
+    </ul>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </body>
+</html>
+
