@@ -7,9 +7,13 @@ from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
 
+# 🔑 Replace with your actual Google Sheet ID from the URL
+# Example: https://docs.google.com/spreadsheets/d/1XyzAbCdEfGh1234567890/edit#gid=0
+SHEET_ID = "1sOX8aqzMiXYnhDz_ihCw5LhDR3atAUlKNHaTcxTVUH0"
+
 def get_sheet_data():
     try:
-        # 🔑 Load Google credentials from environment variable (not a file!)
+        # Load Google credentials from environment variable
         google_creds_json = os.getenv("GOOGLE_CREDENTIALS")
         if not google_creds_json:
             raise Exception("GOOGLE_CREDENTIALS not found in environment variables.")
@@ -23,19 +27,17 @@ def get_sheet_data():
         ]
         creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
 
-        # Connect to Google Sheets
+        # Connect to Google Sheets using Sheet ID
         client = gspread.authorize(creds)
+        sheet = client.open_by_key(SHEET_ID).sheet1  
 
-        # ⚠️ Replace with your actual Google Sheet name
-        sheet = client.open("STA334 Marks").sheet1
-
-        # Convert data into DataFrame
+        # Convert to DataFrame
         data = sheet.get_all_records()
         df = pd.DataFrame(data)
         return df
 
     except Exception as e:
-        # Fall back to local CSV if Google Sheets is not available
+        # Fallback to local CSV if Sheets fails
         print(f"Google Sheets not available, loading sample_data.csv. Error: {e}")
         return pd.read_csv("sample_data.csv")
 
