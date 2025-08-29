@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>STA334 Dashboard</title>
+
+  <!-- Tailwind Play CDN (fast to get started) -->
+  <script>
+    // Tailwind Play CDN config: extend palette with soft pastel colors
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pastelpink: '#FFEEF3',
+            pastelgreen: '#E8F9F0',
+            pastelviolet: '#F3E9FF',
+            pastelyellow: '#FFF8E6',
+            dashboardBg: '#F7F7FB'
+          },
+          borderRadius: {
+            '2xl': '1rem'
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: theme('colors.dashboardBg'); }
+    .card { @apply bg-white rounded-2xl shadow p-5; }
+    /* small tidy CSS fallback if tailwind classes not compiled in some env */
+  </style>
+</head>
+<body class="bg-dashboardBg min-h-screen">
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-20 bg-white/60 backdrop-blur-lg p-4 flex flex-col items-center gap-6 shadow">
+      <!-- small icon/logo -->
+      <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">📚</div>
+      <!-- icons -->
+      <nav class="flex flex-col gap-4 mt-6">
+        <a href="/dashboard" class="p-2 rounded-lg bg-pastelgreen text-sm" title="Dashboard">🏠</a>
+        <a href="#" class="p-2 rounded-lg hover:bg-gray-100" title="Courses">📘</a>
+        <a href="#" class="p-2 rounded-lg hover:bg-gray-100" title="Activity">🗂️</a>
+        <a href="#" class="p-2 rounded-lg hover:bg-gray-100" title="Settings">⚙️</a>
+      </nav>
+      <div class="mt-auto">
+        <img src="https://avatars.dicebear.com/api/identicon/demo.svg" alt="avatar" class="w-10 h-10 rounded-full">
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex-1 p-8">
+      <!-- header -->
+      <header class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-2xl font-semibold">Hey, {{ student['Name'] if student else 'Student' }}</h1>
+          <p class="text-sm text-gray-500">It’s time to study — progress at a glance.</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-sm text-gray-600">Notifications <span class="ml-2 bg-pastelviolet px-2 py-1 rounded-full text-xs">15</span></div>
+          <a href="/logout" class="text-sm text-blue-600">Logout</a>
+        </div>
+      </header>
+
+      <!-- content block -->
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
+HTML
